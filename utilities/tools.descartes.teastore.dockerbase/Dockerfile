@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1-labs
 FROM tomcat:10.0.27-jdk11-temurin
 MAINTAINER Chair of Software Engineering <se2-it@informatik.uni-wuerzburg.de>
 
@@ -46,6 +47,8 @@ RUN keytool -import -noprompt -trustcacerts -alias teastoressl -file /usr/local/
 COPY kieker.monitoring.properties 							/kieker/config/kieker.monitoring.properties
 COPY aop.xml 												            /usr/local/tomcat/lib/aop.xml
 COPY kieker-2.0.0-aspectj.jar 					/kieker/agent/agent.jar
+COPY --link --from=onweer-agent:latest /jars/onweer-agent.jar /onweer-agent.jar
+
 
 EXPOSE 8080
 
