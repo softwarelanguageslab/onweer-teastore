@@ -1,0 +1,26 @@
+openapi: 3.0.1
+info:
+  contact: {}
+  description: The WebUI for the TeaStore benchmark application
+  title: 'TeaStore WebUI'
+  version: "0"
+servers:
+  - description: Local
+    url: 'http://localhost:8080/tools.descartes.teastore.webui'
+components:
+  schemas:
+paths:
+  #/aboutUs/: # Static, thus commented out
+  /cartAction/:
+  #/cart/: # Does not alter state
+  /category/: # Check if it alters state
+  /dataBaseAction/: # Check if not part of admin panel
+  /dataBase/: # Check if not part of admin panel and if it alters state
+  #/error/: # Static
+  #/index/: # Does not alter state
+  /loginAction/:
+  /login/:
+  /order/:
+  /product/: # Check if alters state
+  /profile/: # Does not alter state
+  #/status/: # Admin panel
