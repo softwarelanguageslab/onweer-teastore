@@ -62,7 +62,7 @@ public class CartActionServlet extends AbstractUIServlet {
 				redirect("/cart", response, MESSAGECOOKIE, String.format(ADDPRODUCT, productID));
 				break;
 			} else if (param.contains("removeProduct")) {
-				long productID = Long.parseLong(param.substring("removeProduct_".length()));
+				long productID = Long.parseLong(request.getParameter("removeProduct"));
 				SessionBlob blob = LoadBalancedStoreOperations.removeProductFromCart(getSessionBlob(request),
 						productID);
 				saveSessionBlob(blob, response);

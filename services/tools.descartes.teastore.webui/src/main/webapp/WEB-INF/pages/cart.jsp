@@ -38,7 +38,7 @@
 									value="${count+(orderItem.unitPriceInCents*orderItem.quantity/100)}"
 									scope="page" />
 								<td><button type="submit" class="submit-with-icon"
-										name="removeProduct_${orderItem.productId}">
+										name="removeProduct" value="${orderItem.productId}">
 										<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 									</button></td>
 							</tr>
