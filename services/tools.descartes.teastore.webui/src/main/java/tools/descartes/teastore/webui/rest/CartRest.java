@@ -1,9 +1,6 @@
 package tools.descartes.teastore.webui.rest;
 
-import jakarta.ws.rs.CookieParam;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Cookie;
 import jakarta.ws.rs.core.Response;
 import tools.descartes.teastore.entities.Category;
@@ -16,6 +13,7 @@ import tools.descartes.teastore.registryclient.rest.LoadBalancedCRUDOperations;
 import tools.descartes.teastore.registryclient.rest.LoadBalancedImageOperations;
 import tools.descartes.teastore.registryclient.rest.LoadBalancedRecommenderOperations;
 import tools.descartes.teastore.registryclient.rest.LoadBalancedStoreOperations;
+import tools.descartes.teastore.webui.rest.entities.UpdateQuantity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +22,6 @@ import java.util.List;
 @Path("cart")
 @Produces({ "application/json" })
 public class CartRest {
-
     @GET
     public static Response get(@CookieParam("sessionBlob") Cookie cookie) {
         SessionBlob session = RestHelpers.parseSessionCookie(cookie);
@@ -64,5 +61,38 @@ public class CartRest {
         payload.put("productImages", LoadBalancedImageOperations.getProductPreviewImages(ads));
 
         return Response.ok().entity(payload).build();
+    }
+
+    @Path("add")
+    @POST
+    public Response addToCart(@CookieParam("sessionBlob") Cookie cookie, @QueryParam("productId") long productId) {
+        SessionBlob session = RestHelpers.parseSessionCookie(cookie);
+        SessionBlob newSession = LoadBalancedStoreOperations.addProductToCart(session, productId);
+        return Response.ok().cookie(RestHelpers.encodeSessionCookie(newSession)).build();
+    }
+
+    @Path("remove")
+    @POST
+    public Response removeProduct(@CookieParam("sessionBlob") Cookie cookie, @QueryParam("productId") long productId) {
+        SessionBlob session = RestHelpers.parseSessionCookie(cookie);
+        SessionBlob newSession = LoadBalancedStoreOperations.removeProductFromCart(session, productId);
+        return Response.ok().cookie(RestHelpers.encodeSessionCookie(newSession)).build();
+    }
+
+    @Path("update_quantity")
+    @POST
+    @Consumes({ "application/json" })
+    public Response updateCartQuantities(List<UpdateQuantity> productQuantities, @CookieParam("sessionBlob") Cookie cookie) {
+        SessionBlob session = RestHelpers.parseSessionCookie(cookie);
+
+        for (UpdateQuantity entry : productQuantities) {
+            if(session.getOrderItems().stream().anyMatch(o -> o.getProductId() == entry.getPid())) {
+                session = LoadBalancedStoreOperations.updateQuantity(session, entry.getPid(), entry.getQuantity());
+            } else {
+                return Response.status(Response.Status.BAD_REQUEST).build();
+            }
+        }
+
+        return Response.ok().cookie(RestHelpers.encodeSessionCookie(session)).build();
     }
 }
