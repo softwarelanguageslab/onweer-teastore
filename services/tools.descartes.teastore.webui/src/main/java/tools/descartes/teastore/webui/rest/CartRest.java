@@ -1,6 +1,5 @@
 package tools.descartes.teastore.webui.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.CookieParam;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -18,12 +17,8 @@ import tools.descartes.teastore.registryclient.rest.LoadBalancedImageOperations;
 import tools.descartes.teastore.registryclient.rest.LoadBalancedRecommenderOperations;
 import tools.descartes.teastore.registryclient.rest.LoadBalancedStoreOperations;
 
-import java.io.IOException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 @Path("cart")
@@ -31,60 +26,43 @@ import java.util.List;
 public class CartRest {
 
     @GET
-    public Response get(@CookieParam("sessionBlob") Cookie cookie) {
-        SessionBlob session = parseSessionCookie(cookie);
+    public static Response get(@CookieParam("sessionBlob") Cookie cookie) {
+        SessionBlob session = RestHelpers.parseSessionCookie(cookie);
 
         List<OrderItem> orderItems = session.getOrderItems();
-        ArrayList<Long> ids = new ArrayList<Long>();
+        ArrayList<Long> ids = new ArrayList<>();
         for (OrderItem orderItem : orderItems) {
             ids.add(orderItem.getProductId());
         }
 
-        HashMap<Long, Product> products = new HashMap<Long, Product>();
+        HashMap<Long, Product> products = new HashMap<>();
         for (Long id : ids) {
             Product product = LoadBalancedCRUDOperations.getEntity(Service.PERSISTENCE, "products",
                     Product.class, id);
             products.put(product.getId(), product);
         }
 
-        request.setAttribute("storeIcon",
-                LoadBalancedImageOperations.getWebImage("icon", ImageSizePreset.ICON.getSize()));
-        request.setAttribute("title", "TeaStore Cart");
-        request.setAttribute("CategoryList", LoadBalancedCRUDOperations.getEntities(Service.PERSISTENCE,
-                "categories", Category.class, -1, -1));
-        request.setAttribute("OrderItems", orderItems);
-        request.setAttribute("Products", products);
-        request.setAttribute("login", LoadBalancedStoreOperations.isLoggedIn(getSessionBlob(request)));
-
-        List<Long> productIds = LoadBalancedRecommenderOperations
-                .getRecommendations(blob.getOrderItems(), blob.getUID());
-        List<Product> ads = new LinkedList<Product>();
+        List<Long> productIds = LoadBalancedRecommenderOperations.getRecommendations(orderItems, session.getUID());
+        List<Product> ads = new ArrayList<>();
         for (Long productId : productIds) {
-            ads.add(LoadBalancedCRUDOperations.getEntity(Service.PERSISTENCE, "products", Product.class,
-                    productId));
+            ads.add(LoadBalancedCRUDOperations.getEntity(Service.PERSISTENCE, "products", Product.class, productId));
         }
-
         if (ads.size() > 3) {
             ads.subList(3, ads.size()).clear();
         }
-        request.setAttribute("Advertisment", ads);
 
-        request.setAttribute("productImages", LoadBalancedImageOperations.getProductPreviewImages(ads));
+        HashMap<String, Object> payload = new HashMap<>();
+        // Not useful, included for parity with webui
+        payload.put("storeIcon", LoadBalancedImageOperations.getWebImage("icon", ImageSizePreset.ICON.getSize()));
+        payload.put("title", "TeaStore Cart");
+        payload.put("categories", LoadBalancedCRUDOperations.getEntities(Service.PERSISTENCE, "categories", Category.class, -1, -1));
 
-        return null;
+        payload.put("orderItems", orderItems);
+        payload.put("products", products);
+        payload.put("login", LoadBalancedStoreOperations.isLoggedIn(session));
+        payload.put("advertisement", ads);
+        payload.put("productImages", LoadBalancedImageOperations.getProductPreviewImages(ads));
+
+        return Response.ok().entity(payload).build();
     }
-
-    private SessionBlob parseSessionCookie(Cookie cookie) {
-        ObjectMapper o = new ObjectMapper();
-        try {
-            SessionBlob blob = o.readValue(URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8), SessionBlob.class);
-            if (blob != null) {
-                return blob;
-            }
-        } catch (
-                IOException e) {
-            throw new IllegalStateException("Cookie corrupted!");
-        }
-    }
-
 }
