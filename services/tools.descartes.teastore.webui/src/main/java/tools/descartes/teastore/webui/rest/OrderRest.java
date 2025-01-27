@@ -30,7 +30,7 @@ public class OrderRest {
             price += item.getQuantity() * item.getUnitPriceInCents();
         }
 
-        SessionBlob newsession = LoadBalancedStoreOperations.placeOrder(session name, address, "", cardtype,
+        SessionBlob newsession = LoadBalancedStoreOperations.placeOrder(session, name, address, "", cardtype,
                 YearMonth.parse(expiry, DateTimeFormatter.ofPattern("MM/yyyy")).atDay(1).format(DateTimeFormatter.ISO_LOCAL_DATE),
                 price, cardnumber);
 
