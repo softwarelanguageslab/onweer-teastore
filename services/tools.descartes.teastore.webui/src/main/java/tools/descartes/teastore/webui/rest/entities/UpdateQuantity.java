@@ -31,12 +31,11 @@ public class UpdateQuantity {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if(!(obj instanceof  UpdateQuantity)) {
-            return false;
-        }
-        UpdateQuantity uq = (UpdateQuantity) obj;
-        return this.getPid() == uq.getPid() && this.getQuantity() == uq.getQuantity();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UpdateQuantity)) return false;
+        UpdateQuantity that = (UpdateQuantity) o;
+        return getPid() == that.getPid() && getQuantity() == that.getQuantity();
     }
 
     @Override
