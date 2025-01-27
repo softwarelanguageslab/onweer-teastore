@@ -2,6 +2,8 @@
 
 set -euxo pipefail
 
+mvn clean install -DskipTests
+
 pushd utilities/tools.descartes.teastore.dockerbase;
 
 docker build -t descartesresearch/teastore-base .;
