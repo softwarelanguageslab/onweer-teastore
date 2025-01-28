@@ -25,7 +25,7 @@ public class ProfileRest {
 
         HashMap<String, Object> payload = new HashMap<>();
         payload.put("user", LoadBalancedCRUDOperations.getEntity(Service.PERSISTENCE, "users", User.class, session.getUID()));
-        payload.put("Orders", LoadBalancedCRUDOperations.getEntities(Service.PERSISTENCE, "orders", Order.class, "user", session.getUID(), -1, -1));
+        payload.put("orders", LoadBalancedCRUDOperations.getEntities(Service.PERSISTENCE, "orders", Order.class, "user", session.getUID(), -1, -1));
 
         return Response.ok().entity(payload).build();
     }
