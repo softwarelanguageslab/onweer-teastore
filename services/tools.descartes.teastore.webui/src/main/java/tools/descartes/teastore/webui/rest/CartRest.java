@@ -3,8 +3,6 @@ package tools.descartes.teastore.webui.rest;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Cookie;
 import jakarta.ws.rs.core.Response;
-import tools.descartes.teastore.entities.Category;
-import tools.descartes.teastore.entities.ImageSizePreset;
 import tools.descartes.teastore.entities.OrderItem;
 import tools.descartes.teastore.entities.Product;
 import tools.descartes.teastore.entities.message.SessionBlob;
@@ -49,10 +47,6 @@ public class CartRest {
         }
 
         HashMap<String, Object> payload = new HashMap<>();
-        // Not useful, included for parity with webui
-        payload.put("storeIcon", LoadBalancedImageOperations.getWebImage("icon", ImageSizePreset.ICON.getSize()));
-        payload.put("title", "TeaStore Cart");
-        payload.put("categories", LoadBalancedCRUDOperations.getEntities(Service.PERSISTENCE, "categories", Category.class, -1, -1));
 
         payload.put("orderItems", orderItems);
         payload.put("products", products);
