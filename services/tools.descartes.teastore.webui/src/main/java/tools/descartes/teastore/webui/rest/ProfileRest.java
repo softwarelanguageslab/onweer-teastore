@@ -12,7 +12,7 @@ import tools.descartes.teastore.registryclient.rest.LoadBalancedStoreOperations;
 
 import java.util.HashMap;
 
-@Path("product")
+@Path("profile")
 @Produces({ "application/json" })
 public class ProfileRest {
     @GET
