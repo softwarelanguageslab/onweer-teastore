@@ -1,9 +1,6 @@
 package tools.descartes.teastore.webui.rest;
 
-import jakarta.ws.rs.CookieParam;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Cookie;
 import jakarta.ws.rs.core.Response;
 import tools.descartes.teastore.entities.message.SessionBlob;
@@ -15,6 +12,7 @@ import java.util.Map;
 @Produces({ "application/json" })
 public class LoginRest {
     @POST
+    @Consumes({ "application/json" })
     public Response login(Map<String, String> request, @CookieParam("sessionBlob") Cookie cookie) {
         if (request.get("username") != null && request.get("password") != null) {
             SessionBlob newsession = LoadBalancedStoreOperations.login(RestHelpers.parseSessionCookie(cookie), request.get("username"), request.get("password"));
