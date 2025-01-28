@@ -88,7 +88,6 @@ components:
           type: "string"
     CartResponse:
       type: "object"
-      additionalProperties: false
       properties:
         orderItems:
           type: "array"
@@ -329,7 +328,7 @@ paths:
   /product:
     get:
       summary: "Get info of specified product"
-      operationId: "get"
+      operationId: "getProduct"
       parameters:
         - name: "product"
           in: "query"
@@ -372,7 +371,7 @@ paths:
   /profile:
     get:
       summary: "Get profile info of the current user"
-      operationId: "get"
+      operationId: "getProfile"
       parameters:
         - name: "sessionBlob"
           in: "cookie"
