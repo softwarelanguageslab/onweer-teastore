@@ -34,4 +34,8 @@ public class RestHelpers {
             throw new IllegalStateException("Could not save blob!");
         }
     }
+
+    public static NewCookie deleteCookie(Cookie cookie) {
+        return new NewCookie(cookie, "", 0, false);
+    }
 }
