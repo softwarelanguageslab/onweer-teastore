@@ -20,7 +20,7 @@ import java.util.List;
 @Produces({ "application/json" })
 public class ProductRest {
     @GET
-    public static Response get(@CookieParam("sessionBlob") Cookie cookie, @QueryParam("category") Long pid) {
+    public static Response get(@CookieParam("sessionBlob") Cookie cookie, @QueryParam("product") Long pid) {
         if (pid != null) {
             HashMap<String, Object> payload = new HashMap<>();
 

@@ -50,9 +50,8 @@ public class CartRest {
 
         payload.put("orderItems", orderItems);
         payload.put("products", products);
-        payload.put("login", LoadBalancedStoreOperations.isLoggedIn(session));
-        payload.put("advertisement", ads);
         payload.put("productImages", LoadBalancedImageOperations.getProductPreviewImages(ads));
+        payload.put("ads", ads);
 
         return Response.ok().entity(payload).build();
     }
