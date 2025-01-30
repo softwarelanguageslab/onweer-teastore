@@ -14,14 +14,16 @@ import java.nio.charset.StandardCharsets;
 
 public class RestHelpers {
     public static SessionBlob parseSessionCookie(Cookie cookie) {
-        ObjectMapper o = new ObjectMapper();
-        try {
-            SessionBlob blob = o.readValue(URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8), SessionBlob.class);
-            if (blob != null) {
-                return blob;
+        if(cookie != null) {
+            ObjectMapper o = new ObjectMapper();
+            try {
+                SessionBlob blob = o.readValue(URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8), SessionBlob.class);
+                if (blob != null) {
+                    return blob;
+                }
+            } catch (IOException e) {
+                throw new IllegalStateException("Cookie corrupted!");
             }
-        } catch (IOException e) {
-            throw new IllegalStateException("Cookie corrupted!");
         }
         return new SessionBlob();
     }
@@ -36,6 +38,9 @@ public class RestHelpers {
     }
 
     public static NewCookie deleteCookie(Cookie cookie) {
-        return new NewCookie(cookie, "", 0, false);
+        if(cookie != null) {
+            return new NewCookie(cookie, "", 0, false);
+        }
+        return null;
     }
 }
