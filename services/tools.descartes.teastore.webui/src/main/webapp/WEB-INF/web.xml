@@ -31,9 +31,6 @@
 		<env-entry-type>java.lang.String</env-entry-type>
 		<env-entry-value>http://localhost:8080/tools.descartes.teastore.registry/rest/services/</env-entry-value>
 	</env-entry>
-	<error-page>
-		<location>/error</location>
-	</error-page>
 	<filter>
 		<filter-name>TrackingFilter</filter-name>
 		<filter-class>tools.descartes.teastore.registryclient.rest.TrackingFilter</filter-class>
