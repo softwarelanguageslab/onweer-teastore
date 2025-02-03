@@ -204,35 +204,17 @@ paths:
   ## CATEGORY ##
   /category:
     get:
-      summary: "Get a list of categories, or a list of products in a specified category"
+      summary: "Get a list of categories"
       operationId: "getCategory"
-      parameters:
-        - name: "category"
-          in: "query"
-          required: false
-          schema:
-            type: "integer"
-            format: "int64"
       responses:
         "200":
-          description: "A list of categories or a list of products in a category"
+          description: "A list of categories"
           content:
             'application/json':
               schema:
-                oneOf:
-                  - type: "object"
-                    properties:
-                      products:
-                        type: "array"
-                        items:
-                          $ref: "#/components/schemas/Product"
-                      productImages:
-                        type: "array"
-                        items:
-                          type: "string"
-                  - type: "array"
-                    items:
-                      $ref: "#/components/schemas/Category"
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Category"
 
   ## LOGIN/LOGOUT ##
   /login:
@@ -366,6 +348,35 @@ paths:
                       type: "string"
         "400":
           description: "Invalid product ID"
+
+  /products:
+    get:
+      summary: "List all products in a category"
+      operationId: "getProducts"
+      parameters:
+        - name: "category"
+          in: "query"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            'application/json':
+              schema:
+                type: "object"
+                properties:
+                  products:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/Product"
+                  productImages:
+                    type: "array"
+                    items:
+                      type: "string"
+
 
   ## PROFILE ##
   /profile:
