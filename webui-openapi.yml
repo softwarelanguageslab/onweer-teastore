@@ -75,6 +75,12 @@ components:
           type: "string"
     Order:
       type: "object"
+      required:
+        - "id"
+        - "userId"
+        - "time"
+        - "totalPriceInCents"
+      additionalProperties: false
       properties:
         id:
           type: "integer"
