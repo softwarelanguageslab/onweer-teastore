@@ -12,6 +12,12 @@ components:
   schemas:
     Product:
       type: "object"
+      required:
+        - "id"
+        - "cateogryId"
+        - "name"
+        - "description"
+        - "listPriceInCents"
       additionalProperties: false
       properties:
         id:
@@ -29,6 +35,12 @@ components:
           format: "int64"
     OrderItem:
       type: "object"
+      required:
+        - "id"
+        - "productId"
+        - "orderId"
+        - "quantity"
+        - "unitPriceInCents"
       additionalProperties: false
       properties:
         id:
@@ -48,6 +60,10 @@ components:
           format: "int64"
     Category:
       type: "object"
+      required:
+        - "id"
+        - "name"
+        - "description"
       additionalProperties: false
       properties:
         id:
@@ -73,6 +89,12 @@ components:
           format: "int64"
     User:
       type: "object"
+      required:
+        - "id"
+        - "userName"
+        - "password"
+        - "realName"
+        - "email"
       additionalProperties: false
       properties:
         id:
@@ -88,6 +110,11 @@ components:
           type: "string"
     CartResponse:
       type: "object"
+      required:
+        - "orderItems"
+        - "products"
+        - "productImages"
+        - "ads"
       properties:
         orderItems:
           type: "array"
@@ -108,6 +135,9 @@ components:
             $ref: "#/components/schemas/Product"
     UpdateQuantity:
       type: "object"
+      required:
+        - "pid"
+        - "quantity"
       additionalProperties: false
       properties:
         pid:
@@ -232,6 +262,9 @@ paths:
           application/json:
             schema:
               type: "object"
+              required:
+                - "username"
+                - "password"
               additionalProperties: false
               properties:
                 username:
@@ -367,6 +400,9 @@ paths:
             'application/json':
               schema:
                 type: "object"
+                required:
+                  - "products"
+                  - "productImages"
                 properties:
                   products:
                     type: "array"
@@ -396,6 +432,9 @@ paths:
             'application/json':
               schema:
                 type: "object"
+                required:
+                  - "user"
+                  - "orders"
                 properties:
                   user:
                     $ref: "#/components/schemas/User"
