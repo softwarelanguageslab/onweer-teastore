@@ -132,9 +132,10 @@ components:
             "^[0-9]+$":
               $ref: "#/components/schemas/Product"
         productImages:
-          type: "array"
-          items:
-            type: "string"
+          type: "object"
+          patternProperties:
+            "^[0-9]+$":
+              type: "string"
         ads:
           type: "array"
           items:
@@ -415,9 +416,10 @@ paths:
                     items:
                       $ref: "#/components/schemas/Product"
                   productImages:
-                    type: "array"
-                    items:
-                      type: "string"
+                    type: "object"
+                    patternProperties:
+                      "^[0-9]+$":
+                        type: "string"
 
 
   ## PROFILE ##
