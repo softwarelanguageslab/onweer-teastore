@@ -35,10 +35,9 @@ public class OrderRest {
             SessionBlob newsession = LoadBalancedStoreOperations.placeOrder(session, name, address, "", cardtype,
                     YearMonth.parse(expiry, DateTimeFormatter.ofPattern("MM/yyyy")).atDay(1).format(DateTimeFormatter.ISO_LOCAL_DATE),
                     price, cardnumber);
+            return Response.ok().cookie(RestHelpers.encodeSessionCookie(newsession)).build();
         } catch(DateTimeException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
         }
-
-        return Response.ok().cookie(RestHelpers.encodeSessionCookie(newsession)).build();
     }
 }
