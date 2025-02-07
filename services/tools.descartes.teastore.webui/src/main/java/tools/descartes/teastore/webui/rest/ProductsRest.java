@@ -16,7 +16,7 @@ public class ProductsRest {
     @GET
     public static Response get(@QueryParam("category") Long cid)
             throws NotFoundException {
-        if(cid == null) {
+        if(cid != null) {
             List<Product> productlist = LoadBalancedCRUDOperations.getEntities(Service.PERSISTENCE,
                     "products", Product.class, "category", cid, 0, 25);
 
