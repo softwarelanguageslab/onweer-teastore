@@ -58,18 +58,28 @@ public class CartRest {
 
     @Path("add")
     @POST
-    public Response addToCart(@CookieParam("sessionBlob") Cookie cookie, @QueryParam("productId") long productId) {
-        SessionBlob session = RestHelpers.parseSessionCookie(cookie);
-        SessionBlob newSession = LoadBalancedStoreOperations.addProductToCart(session, productId);
-        return Response.ok().cookie(RestHelpers.encodeSessionCookie(newSession)).build();
+    public Response addToCart(@CookieParam("sessionBlob") Cookie cookie, @QueryParam("productId") Long productId)
+        throws NotFoundException {
+        if(productId == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        } else {
+            SessionBlob session = RestHelpers.parseSessionCookie(cookie);
+            SessionBlob newSession = LoadBalancedStoreOperations.addProductToCart(session, productId);
+            return Response.ok().cookie(RestHelpers.encodeSessionCookie(newSession)).build();
+        }
     }
 
     @Path("remove")
     @POST
-    public Response removeProduct(@CookieParam("sessionBlob") Cookie cookie, @QueryParam("productId") long productId) {
-        SessionBlob session = RestHelpers.parseSessionCookie(cookie);
-        SessionBlob newSession = LoadBalancedStoreOperations.removeProductFromCart(session, productId);
-        return Response.ok().cookie(RestHelpers.encodeSessionCookie(newSession)).build();
+    public Response removeProduct(@CookieParam("sessionBlob") Cookie cookie, @QueryParam("productId") Long productId)
+            throws NotFoundException {
+        if(productId == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        } else {
+            SessionBlob session = RestHelpers.parseSessionCookie(cookie);
+            SessionBlob newSession = LoadBalancedStoreOperations.removeProductFromCart(session, productId);
+            return Response.ok().cookie(RestHelpers.encodeSessionCookie(newSession)).build();
+        }
     }
 
     @Path("update_quantity")

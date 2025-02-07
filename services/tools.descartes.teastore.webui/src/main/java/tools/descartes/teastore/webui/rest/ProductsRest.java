@@ -14,7 +14,8 @@ import java.util.List;
 @Produces({ "application/json" })
 public class ProductsRest {
     @GET
-    public static Response get(@QueryParam("category") Long cid) {
+    public static Response get(@QueryParam("category") Long cid)
+            throws NotFoundException {
         List<Product> productlist = LoadBalancedCRUDOperations.getEntities(Service.PERSISTENCE,
                 "products", Product.class, "category", cid, 0, 25);
 

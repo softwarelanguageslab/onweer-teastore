@@ -195,6 +195,8 @@ paths:
       responses:
         "200":
           description: "Item successfully added"
+        "404":
+          description: "Product with given ID does not exist"
   /cart/remove:
     post:
       summary: "Remove an item from the cart by its productId"
@@ -214,6 +216,8 @@ paths:
       responses:
         "200":
           description: "Item successfully removed"
+        "404":
+          description: "Product with given ID does not exist"
   /cart/update_quantity:
     post:
       summary: "Update the quantity of specified items in the cart"
@@ -388,6 +392,8 @@ paths:
                       type: "string"
         "400":
           description: "Invalid product ID"
+        "404":
+          description: "Product with given ID does not exist"
 
   /products:
     get:
@@ -420,7 +426,8 @@ paths:
                     patternProperties:
                       "^[0-9]+$":
                         type: "string"
-
+        "404":
+          description: "Category with given ID does not exist"
 
   ## PROFILE ##
   /profile:
