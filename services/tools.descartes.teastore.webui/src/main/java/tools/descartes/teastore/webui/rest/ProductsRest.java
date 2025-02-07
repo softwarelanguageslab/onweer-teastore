@@ -16,12 +16,15 @@ public class ProductsRest {
     @GET
     public static Response get(@QueryParam("category") Long cid)
             throws NotFoundException {
-        List<Product> productlist = LoadBalancedCRUDOperations.getEntities(Service.PERSISTENCE,
-                "products", Product.class, "category", cid, 0, 25);
+        if(cid == null) {
+            List<Product> productlist = LoadBalancedCRUDOperations.getEntities(Service.PERSISTENCE,
+                    "products", Product.class, "category", cid, 0, 25);
 
-        HashMap<String, Object> payload = new HashMap<>();
-        payload.put("products", productlist);
-        payload.put("productImages", LoadBalancedImageOperations.getProductPreviewImages(productlist));
-        return Response.ok().entity(payload).build();
+            HashMap<String, Object> payload = new HashMap<>();
+            payload.put("products", productlist);
+            payload.put("productImages", LoadBalancedImageOperations.getProductPreviewImages(productlist));
+            return Response.ok().entity(payload).build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).build();
     }
 }
