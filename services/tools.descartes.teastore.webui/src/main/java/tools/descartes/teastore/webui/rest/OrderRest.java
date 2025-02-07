@@ -7,6 +7,7 @@ import tools.descartes.teastore.entities.OrderItem;
 import tools.descartes.teastore.entities.message.SessionBlob;
 import tools.descartes.teastore.registryclient.rest.LoadBalancedStoreOperations;
 
+import java.time.DateTimeException;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 
@@ -30,9 +31,13 @@ public class OrderRest {
             price += item.getQuantity() * item.getUnitPriceInCents();
         }
 
-        SessionBlob newsession = LoadBalancedStoreOperations.placeOrder(session, name, address, "", cardtype,
-                YearMonth.parse(expiry, DateTimeFormatter.ofPattern("MM/yyyy")).atDay(1).format(DateTimeFormatter.ISO_LOCAL_DATE),
-                price, cardnumber);
+        try {
+            SessionBlob newsession = LoadBalancedStoreOperations.placeOrder(session, name, address, "", cardtype,
+                    YearMonth.parse(expiry, DateTimeFormatter.ofPattern("MM/yyyy")).atDay(1).format(DateTimeFormatter.ISO_LOCAL_DATE),
+                    price, cardnumber);
+        } catch(DateTimeException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
+        }
 
         return Response.ok().cookie(RestHelpers.encodeSessionCookie(newsession)).build();
     }
