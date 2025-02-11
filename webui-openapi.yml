@@ -318,21 +318,25 @@ paths:
           required: true
           schema:
             type: "string"
+            pattern: "^[a-zA-Z ]+$"
         - name: "address"
           in: "query"
           required: true
           schema:
             type: "string"
+            pattern: "^[a-zA-Z0-9 ]+$"
         - name: "cardtype"
           in: "query"
           required: true
           schema:
             type: "string"
+            pattern: "^[a-zA-Z]+$"
         - name: "cardnumber"
           in: "query"
           required: true
           schema:
             type: "string"
+            pattern: "^[0-9]+$"
         - name: "expiry"
           in: "query"
           required: true
