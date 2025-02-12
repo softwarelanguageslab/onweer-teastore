@@ -96,7 +96,7 @@ public class AuthUserActionsRest {
       orderId = LoadBalancedCRUDOperations.sendEntityForCreation(Service.PERSISTENCE, "orders",
           Order.class, blob.getOrder());
     } catch (LoadBalancerTimeoutException e) {
-      return Response.status(408).build();
+      return Response.status(504).build();
     } catch (NotFoundException e) {
       return Response.status(404).build();
     }
@@ -106,7 +106,7 @@ public class AuthUserActionsRest {
         LoadBalancedCRUDOperations.sendEntityForCreation(Service.PERSISTENCE, "orderitems",
             OrderItem.class, item);
       } catch (TimeoutException e) {
-        return Response.status(408).build();
+        return Response.status(504).build();
       } catch (NotFoundException e) {
         return Response.status(404).build();
       }
@@ -137,7 +137,7 @@ public class AuthUserActionsRest {
       user = LoadBalancedCRUDOperations.getEntityWithProperties(Service.PERSISTENCE, "users",
           User.class, "name", name);
     } catch (TimeoutException e) {
-      return Response.status(408).build();
+      return Response.status(504).build();
     } catch (NotFoundException e) {
       return Response.status(Response.Status.OK).entity(blob).build();
     }

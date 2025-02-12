@@ -82,7 +82,7 @@ public final class NonBalancedCRUDOperations {
     }
     if (response != null && response.getStatus() == Status.NOT_FOUND.getStatusCode()) {
       throw new NotFoundException();
-    } else if (response != null && response.getStatus() == Status.REQUEST_TIMEOUT.getStatusCode()) {
+    } else if (response != null && response.getStatus() == Status.GATEWAY_TIMEOUT.getStatusCode()) {
       throw new TimeoutException();
     }
     return id;
@@ -118,7 +118,7 @@ public final class NonBalancedCRUDOperations {
     }
     if (response != null && response.getStatus() == Status.NOT_FOUND.getStatusCode()) {
       throw new NotFoundException();
-    } else if (response != null && response.getStatus() == Status.REQUEST_TIMEOUT.getStatusCode()) {
+    } else if (response != null && response.getStatus() == Status.GATEWAY_TIMEOUT.getStatusCode()) {
       throw new TimeoutException();
     }
     if (response != null && response.getStatus() == 200) {
@@ -155,7 +155,7 @@ public final class NonBalancedCRUDOperations {
     }
     if (response != null && response.getStatus() == Status.NOT_FOUND.getStatusCode()) {
       throw new NotFoundException();
-    } else if (response != null && response.getStatus() == Status.REQUEST_TIMEOUT.getStatusCode()) {
+    } else if (response != null && response.getStatus() == Status.GATEWAY_TIMEOUT.getStatusCode()) {
       throw new TimeoutException();
     }
     return false;
@@ -192,7 +192,7 @@ public final class NonBalancedCRUDOperations {
     }
     if (response != null && response.getStatus() == Status.NOT_FOUND.getStatusCode()) {
       throw new NotFoundException();
-    } else if (response != null && response.getStatus() == Status.REQUEST_TIMEOUT.getStatusCode()) {
+    } else if (response != null && response.getStatus() == Status.GATEWAY_TIMEOUT.getStatusCode()) {
       throw new TimeoutException();
     }
     return entity;
@@ -241,7 +241,7 @@ public final class NonBalancedCRUDOperations {
     }
     if (response != null && response.getStatus() == Status.NOT_FOUND.getStatusCode()) {
       throw new NotFoundException();
-    } else if (response != null && response.getStatus() == Status.REQUEST_TIMEOUT.getStatusCode()) {
+    } else if (response != null && response.getStatus() == Status.GATEWAY_TIMEOUT.getStatusCode()) {
       throw new TimeoutException();
     }
     return entities;
@@ -295,7 +295,7 @@ public final class NonBalancedCRUDOperations {
     }
     if (response != null && response.getStatus() == Status.NOT_FOUND.getStatusCode()) {
       throw new NotFoundException();
-    } else if (response != null && response.getStatus() == Status.REQUEST_TIMEOUT.getStatusCode()) {
+    } else if (response != null && response.getStatus() == Status.GATEWAY_TIMEOUT.getStatusCode()) {
       throw new TimeoutException();
     }
     return entities;
@@ -336,7 +336,7 @@ public final class NonBalancedCRUDOperations {
     }
     if (response != null && response.getStatus() == Status.NOT_FOUND.getStatusCode()) {
       throw new NotFoundException();
-    } else if (response != null && response.getStatus() == Status.REQUEST_TIMEOUT.getStatusCode()) {
+    } else if (response != null && response.getStatus() == Status.GATEWAY_TIMEOUT.getStatusCode()) {
       throw new TimeoutException();
     }
     return entity;

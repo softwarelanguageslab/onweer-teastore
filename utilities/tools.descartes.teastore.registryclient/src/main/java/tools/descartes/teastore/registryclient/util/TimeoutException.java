@@ -15,7 +15,7 @@ package tools.descartes.teastore.registryclient.util;
 
 
 /**
- * Exception thrown if a 408 response was received.
+ * Exception thrown if a 504 response was received.
  * @author Joakim von Kistowski
  *
  */
@@ -26,7 +26,7 @@ public class TimeoutException extends RuntimeException {
 	/**
 	 * The corresponding HTTP error code.
 	 */
-	public static final int ERROR_CODE = 408;
+	public static final int ERROR_CODE = 504;
 	
 
 	/**

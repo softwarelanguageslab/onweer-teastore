@@ -60,7 +60,7 @@ public class AuthCartRest {
       product = LoadBalancedCRUDOperations.getEntity(Service.PERSISTENCE, "products", Product.class,
           pid);
     } catch (TimeoutException e) {
-      return Response.status(408).build();
+      return Response.status(504).build();
     } catch (NotFoundException e) {
       return Response.status(404).build();
     }

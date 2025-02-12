@@ -37,7 +37,7 @@ public final class RestUtil {
 			throws NotFoundException, LoadBalancerTimeoutException {
 		if (responseWithStatus.getStatus() == Status.NOT_FOUND.getStatusCode()) {
 			throw new NotFoundException();
-		} else if (responseWithStatus.getStatus() == Status.REQUEST_TIMEOUT.getStatusCode()) {
+		} else if (responseWithStatus.getStatus() == Status.GATEWAY_TIMEOUT.getStatusCode()) {
 			throw new LoadBalancerTimeoutException("Timout waiting for Store.", Service.AUTH);
 		}
 	}

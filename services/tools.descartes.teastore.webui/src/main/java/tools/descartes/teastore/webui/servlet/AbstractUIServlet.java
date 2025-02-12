@@ -292,12 +292,12 @@ public abstract class AbstractUIServlet extends HttpServlet {
 
 	private void serveTimoutResponse(HttpServletRequest request, HttpServletResponse response, Service service)
 			throws ServletException, IOException {
-		response.setStatus(408);
+		response.setStatus(504);
 		request.setAttribute("CategoryList", new ArrayList<Category>());
 		request.setAttribute("storeIcon", "");
 		request.setAttribute("errorImage", "");
 		request.setAttribute("title", "TeaStore Timeout");
-		request.setAttribute("messagetitle", "408: Timout waiting for Service: " + service.getServiceName());
+		request.setAttribute("messagetitle", "504: Timout waiting for Service: " + service.getServiceName());
 		request.setAttribute("messageparagraph", "WebUI got a timeout waiting for service \"" + service.getServiceName()
 				+ "\" to respond. Note the that service may itself have been waiting for another service.");
 		request.setAttribute("login", false);

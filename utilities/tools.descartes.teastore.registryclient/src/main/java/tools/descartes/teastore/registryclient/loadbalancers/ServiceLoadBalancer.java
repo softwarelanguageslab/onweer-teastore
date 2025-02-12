@@ -231,7 +231,7 @@ public final class ServiceLoadBalancer {
         		if (slbr == null) {
         			throw new NullPointerException("ServiceLoadBalancerResult was null!");
         		}
-        		if (slbr.getStatusCode() == Status.REQUEST_TIMEOUT.getStatusCode()) {
+        		if (slbr.getStatusCode() == Status.GATEWAY_TIMEOUT.getStatusCode()) {
         			throw new LoadBalancerTimeoutException("Timout at endpoint: "
         					+ endpointURI + ", with target service: " + targetService.getServiceName(),
         					targetService);
