@@ -31,7 +31,8 @@ public class RestHelpers {
     public static NewCookie encodeSessionCookie(SessionBlob blob) {
         ObjectMapper o = new ObjectMapper();
         try {
-            return new NewCookie("sessionBlob", URLEncoder.encode(o.writeValueAsString(blob), "UTF-8"));
+            return new NewCookie("sessionBlob", URLEncoder.encode(o.writeValueAsString(blob), "UTF-8"),
+                    "/", null, null, Integer.MAX_VALUE, false);
         } catch (JsonProcessingException | UnsupportedEncodingException e) {
             throw new IllegalStateException("Could not save blob!");
         }
