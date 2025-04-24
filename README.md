@@ -1,3 +1,20 @@
+# Onweer enhanced TeaStore
+
+This repository contains a version of TeaStore with several enhancements for use with the Onweer resilience fuzzing tool:
+* A proper REST API has been added to the webui service
+* An OpenAPI 3.1 description of this API is provided in webui-openapi.yml
+* The Onweer java agent is included in the Docker images for coverage information and fault injection.
+* Some fixes and changes in error handling behavior to make TeaStore more appropriate to resilience testing
+** Add Jakarta exception mappers to properly propagate exceptions to the user
+** Replace incorrect usage of the 408 status code with 504.
+** Etc.
+
+To build this version of TeaStore, simply run `./rebuild_docker.sh`. This requires already having built the `onweer-agent` Docker image, else it will not be able to find the agent JAR.
+
+Once the images have been built, TeaStore can be ran using docker-compose by using the `examples/docker/docker-compose_default.yaml` docker-compose file.
+
+What follows is the original TeaStore README.md
+
 # TeaStore #  
 
 The TeaStore is a micro-service reference and test application to be used in benchmarks and tests. The TeaStore emulates a basic web store for automatically generated, tea and tea supplies. As it is primarily a test application, it features UI elements for database generation and service resetting in addition to the store itself.
